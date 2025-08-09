@@ -2,9 +2,28 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Disable netrw early
+-- Completely disable netrw to prevent conflicts with Neo-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw_gitignore = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.netrw_nogx = 1
+
+-- Disable netrw autocommands
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		if vim.fn.exists(":Explore") == 2 then
+			vim.cmd("delcommand Explore")
+		end
+		if vim.fn.exists(":Sexplore") == 2 then
+			vim.cmd("delcommand Sexplore")
+		end
+		if vim.fn.exists(":Vexplore") == 2 then
+			vim.cmd("delcommand Vexplore")
+		end
+	end,
+})
 
 -- Only set the most essential options
 vim.cmd([[
@@ -46,6 +65,6 @@ vim.cmd([[
 -- Create undodir safely
 local undodir = vim.fn.expand("~/.vim/undodir")
 if vim.fn.isdirectory(undodir) == 0 then
-  vim.fn.mkdir(undodir, "p")
+	vim.fn.mkdir(undodir, "p")
 end
 vim.cmd("set undodir=" .. undodir)
