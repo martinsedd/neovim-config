@@ -1,29 +1,23 @@
--- Set leader keys
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
--- Completely disable netrw to prevent conflicts with Neo-tree
+-- Disable netrw completely and silence errors
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw_gitignore = 1
 vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
-vim.g.netrw_nogx = 1
 
--- Disable netrw autocommands
+-- Suppress startup error messages
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		if vim.fn.exists(":Explore") == 2 then
-			vim.cmd("delcommand Explore")
-		end
-		if vim.fn.exists(":Sexplore") == 2 then
-			vim.cmd("delcommand Sexplore")
-		end
-		if vim.fn.exists(":Vexplore") == 2 then
-			vim.cmd("delcommand Vexplore")
-		end
+		vim.schedule(function()
+			vim.o.shortmess = vim.o.shortmess .. "F"
+			vim.cmd("silent! messages clear")
+		end)
 	end,
 })
+
+-- Set leader keys
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 -- Only set the most essential options
 vim.cmd([[

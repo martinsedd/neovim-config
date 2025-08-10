@@ -1,3 +1,2 @@
-print("hello world")
-
-# comment
+def function():
+    pass
