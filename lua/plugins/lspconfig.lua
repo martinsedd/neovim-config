@@ -101,6 +101,7 @@ return {
 					analysis = {
 						typeCheckingMode = "basic",
 					},
+					pythonPath = "./.venv/bin/python",
 				},
 			},
 		})
